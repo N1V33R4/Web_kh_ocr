@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khmer OCR</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+
+<body>
+  <main class="container">
+    <hgroup>
+      <h1>Welcome to Khmer OCR using Tesseract</h1>
+      <h2>Built with <mark>Django</mark> and <mark>HTMX</mark> with a dash of <abbr title="pico.css">pico.</abbr></h2>
+    </hgroup>
+    
+    <form action=""
+          hx-post="/ocr"
+          enctype="multipart/form-data"
+          hx-encoding="multipart/form-data"
+          hx-target="p" 
+          hx-swap="innerHTML"
+    >
+      {% csrf_token %}
+      <input type="file" name="image" accept="image/png, image/jpeg">
+      <button>
+        Tell me what it says
+      </button>
+    </form>
+    
+    <h3>Results</h3>
+    <p style="white-space: pre-wrap;">...</p>
+  </main>
+
+  <div class="status" style="position:absolute;top:5%;right:5%">
+    <p id='msg'></p>
+  </div>
+
+
+  <footer class="container">
+    <details>
+      <summary>About this project</summary>
+      <p>We decided to build a web interface for our past project of doing Khmer OCR with Tesseract from our previous semester.</p>
+      <p>This program automatically looks for <i>English</i> and <i>Khmer</i> letters in the image and give you the text.</p>
+    </details>
+    <details>
+      <summary>Team members</summary>
+      <div class="grid">
+        <article style="margin:0">
+          <img src="https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+          Hou neavireakpong
+        </article>
+        <article style="margin:0">
+          <img src="https://images.unsplash.com/photo-1557481944-1582c12380dd?q=80&w=1930&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+          Hong Rotha
+        </article>
+      </div>
+    </details>
+  </footer>
+
+  <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+  <script>
+    const btn = document.querySelector('button')
+    const msg = document.querySelector('#msg')
+
+    document.addEventListener('htmx:beforeRequest', function(e) {
+      btn.setAttribute('aria-busy', 'true')
+      btn.classList.toggle('secondary')
+
+      msg.innerHTML = ''
+    });
+
+    document.addEventListener('htmx:afterRequest', function(e) {
+      btn.setAttribute('aria-busy', 'false')
+      btn.classList.toggle('secondary')
+
+      if (e.detail.successful) {
+        msg.innerHTML = "Success"
+        msg.style.color = 'green'
+      } else {
+        msg.innerHTML = "Failed"
+        msg.style.color = 'red'
+      }
+    });
+  </script>
+</body>
+
+</html>

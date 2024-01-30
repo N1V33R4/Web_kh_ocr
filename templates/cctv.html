@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCTV {{ title }}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <style>
+    main {
+      background-color: #fff;
+    }
+    nav h1 {
+      margin-bottom: 0;
+    }
+    main h2::after {
+      display: block;
+      max-width: 100px;
+      margin: 1rem auto 0;
+      border-bottom: .2rem solid var(--primary);
+      content: "";
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <nav>
+      <ul>
+        <li><h1>KMUT CCTV System</h1></li>
+      </ul>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">VMS</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main data-theme="light">
+    <section class="container">
+      <h2 style="text-align: center;">LIST OF CCTV</h2>
+
+      <div class="grid">
+        <div style="text-align: center;">
+          <img src="{% static 'cctv.jpg' %}" style="max-width: 300px;">
+          <h5>Camera 1</h5>
+          <p>Position: Las Vegas</p>
+        </div>
+        <div style="text-align: center;">
+          <img src="{% static 'cctv.jpg' %}" style="max-width: 300px;">
+          <h5>Camera 2</h5>
+          <p>Position: Beijing</p>
+        </div>
+        <div style="text-align: center;">
+          <img src="{% static 'cctv.jpg' %}" style="max-width: 300px;">
+          <h5>Camera 3</h5>
+          <p>Position: Phnom Penh</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+
+</html>
